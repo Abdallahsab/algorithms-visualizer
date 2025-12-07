@@ -1,4 +1,4 @@
- 🔢 Algorithms Visualizer Pro
+ 🔢 Algorithms Visualizer 
 
 A comprehensive and professional algorithm visualization tool built with Python and ttkbootstrap. Perfect for learning, teaching, and analyzing fundamental computer science algorithms.
 ---
@@ -148,3 +148,4 @@ The application includes pre-loaded examples:
 - [ ] Performance benchmarking suite
 
 ---
+
