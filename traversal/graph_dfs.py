@@ -6,7 +6,7 @@ Space Complexity: O(V)
 
 def dfs(graph, start, tracker=None):
     """
-    DFS with performance tracking
+    DFS with performance tracking and step-by-step visualization
     Explores as deep as possible before backtracking
     """
     visited = []
@@ -17,8 +17,13 @@ def dfs(graph, start, tracker=None):
         node = stack.pop()
         visited.append(node)
         
-        if tracker and len(tracker.steps) < 20:
-            tracker.steps.append(visited.copy())
+        # Record step with current node being processed
+        if tracker and len(tracker.steps) < 50:
+            tracker.steps.append({
+                'visited': visited.copy(),
+                'current': node,
+                'stack': stack.copy()
+            })
         
         for neighbor in reversed(graph.get(node, [])):
             if tracker:
