@@ -8,7 +8,7 @@ from collections import deque
 
 def bfs(graph, start, tracker=None):
     """
-    BFS with performance tracking
+    BFS with performance tracking and step-by-step visualization
     Explores graph level by level, finds shortest path in unweighted graphs
     """
     visited = []
@@ -19,8 +19,13 @@ def bfs(graph, start, tracker=None):
         node = queue.popleft()
         visited.append(node)
         
-        if tracker and len(tracker.steps) < 20:
-            tracker.steps.append(visited.copy())
+        # Record step with current node being processed
+        if tracker and len(tracker.steps) < 50:
+            tracker.steps.append({
+                'visited': visited.copy(),
+                'current': node,
+                'queue': list(queue)
+            })
         
         for neighbor in graph.get(node, []):
             if tracker:
