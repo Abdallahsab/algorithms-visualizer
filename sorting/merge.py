@@ -7,16 +7,20 @@ Stable: Yes
 
 def merge_sort(arr, tracker=None):
     """
-    Merge Sort with performance tracking
+    Merge Sort with performance tracking and step-by-step visualization
     Divide and conquer algorithm that splits array and merges sorted halves
     """
-    def _merge_sort(arr):
+    # Keep reference to original for updating
+    original_arr = arr.copy()
+    indices_map = {id(original_arr): list(range(len(original_arr)))}
+    
+    def _merge_sort(arr, start_idx=0):
         if len(arr) > 1:
             mid = len(arr) // 2
             L, R = arr[:mid], arr[mid:]
             
-            _merge_sort(L)
-            _merge_sort(R)
+            _merge_sort(L, start_idx)
+            _merge_sort(R, start_idx + mid)
             
             i = j = k = 0
             
@@ -42,10 +46,27 @@ def merge_sort(arr, tracker=None):
                 j += 1
                 k += 1
             
-            if tracker and len(tracker.steps) < 10:
-                tracker.steps.append(arr.copy())
+            # Update original array for visualization
+            for idx, val in enumerate(arr):
+                original_arr[start_idx + idx] = val
+            
+            # Record merged state
+            if tracker and len(tracker.steps) < 100:
+                tracker.steps.append({
+                    'array': original_arr.copy(),
+                    'merging': list(range(start_idx, start_idx + len(arr))),
+                    'sorted': []
+                })
         
         return arr
     
-    arr = arr.copy()
-    return _merge_sort(arr)
+    _merge_sort(original_arr)
+    
+    # Final sorted state
+    if tracker and len(tracker.steps) < 100:
+        tracker.steps.append({
+            'array': original_arr.copy(),
+            'sorted': list(range(len(original_arr)))
+        })
+    
+    return original_arr
